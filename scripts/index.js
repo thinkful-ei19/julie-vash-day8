@@ -6,11 +6,19 @@ $(document).ready(function() {
   shoppingList.render();
 
   api.getItems((items) => {
+    
     items.forEach((item) => store.addItem(item));
+    // const item = store.items[0];
+    // console.log(store.items);
+    // console.log('current name: ' + item.name);
+    // store.findAndUpdate(item.id, { name: 'windex' });
+    // console.log('new name: ' + item.name);
     shoppingList.render();
   });
 
 });
+
+
 
 // store.items.push(Item.create('apples'));
 
