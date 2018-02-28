@@ -1,5 +1,5 @@
 'use strict';
-/* global store, api, $ */
+/* global store, api, $*/
 
 // eslint-disable-next-line no-unused-vars
 const shoppingList = (function(){
@@ -60,13 +60,9 @@ const shoppingList = (function(){
     $('#js-shopping-list-form').submit(function (event) {
       event.preventDefault();
       const newItemName = $('.js-shopping-list-entry').val();
-      // $('.js-shopping-list-entry').val('');
-      // store.addItem(newItemName);
-      // render();
-      api.createItem(newItemName, (newItem) => {
-        store.addItem(newItem);
-        render();
-      });
+      $('.js-shopping-list-entry').val('');
+      store.addItem(newItemName);
+      render();
     });
   }
   
@@ -79,8 +75,13 @@ const shoppingList = (function(){
   function handleItemCheckClicked() {
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
       const id = getItemIdFromElement(event.currentTarget);
-      store.findAndToggleChecked(id);
-      render();
+      // store.findAndToggleChecked(id);
+      // render();
+      const item = store.findById(id);
+      api.updateItem(id, { checked: !item.checked }, () => {
+        store.findAndUpdate(id, { checked: !item.checked });
+        render();
+      });
     });
   }
   
@@ -90,18 +91,28 @@ const shoppingList = (function(){
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
-      store.findAndDelete(id);
+      //store.findAndDelete(id);
+      api.deleteItem(id, () => {
+        store.findAndDelete(id);
+        render();
+      });
+      
       // render the updated shopping list
-      render();
+      //render();
     });
   }
   
-  function handleEditShoppingItemSubmit() {
+  function handleEditShoppingItemSubmit(id, newName) {
     $('.js-shopping-list').on('submit', '#js-edit-item', event => {
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
-      store.findAndUpdateName(id, itemName);
+      //store.findAndUpdateName(id, itemName);
+
+      api.updateItem(id, { name: newName }, () => {
+        store.findAndUpdate(id, { name: newName });
+        //render();
+      });
       render();
     });
   }
