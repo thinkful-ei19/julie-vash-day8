@@ -22,9 +22,9 @@ $(document).ready(function() {
 // console.log(api.BASE_URL);
 
 // api.createItem('pears', (newItem) => {
-//   console.log(newItem);
+//   //console.log(newItem);
 //   api.getItems((items) => {
-//     console.log(items);
+//     console.log('items', items);
 //   });
 // });
 
