@@ -1,5 +1,7 @@
 'use strict';
+/* global store, api, $*/
 
+//eslint-disable-next-line no-unused-vars
 const api = (function () {
   const BASE_URL = 'https://thinkful-list-api.herokuapp.com/tj';
   const getItems = function(callback){
@@ -10,9 +12,10 @@ const api = (function () {
     const newItem = JSON.stringify({name: name});
   
     const testData = {
-      url: `${BASE_URL}/items`,
+      url: BASE_URL + '/items',
       method: 'POST',
-      contentType: 'application/json',
+	  contentType: 'application/json',
+	  dataType: 'JSON',
       data: newItem,
       success: callback
     };
