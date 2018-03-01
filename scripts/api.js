@@ -11,21 +11,23 @@ const api = (function () {
   };
 
   const createItem = function(name, callback) {
+
     const newItem = JSON.stringify({name: name});
   
-    const testData = {
+    const settings = {
       url: BASE_URL + '/items',
       method: 'POST',
-	  contentType: 'application/json',
-	  dataType: 'JSON',
+	    contentType: 'application/json',
+	    dataType: 'JSON',
       data: newItem,
       success: callback
     };
 
-    $.ajax(testData);
+    $.ajax(settings);
   };
   
   const updateItem = function(id, updateData, callback) {
+  
     $.ajax({
       url : `${BASE_URL}/items/${id}`,
       method: 'PATCH',
@@ -36,6 +38,7 @@ const api = (function () {
   };
 
   const deleteItem = function(id, callback) {
+  
     $.ajax({
       url : `${BASE_URL}/items/${id}`,
       method: 'DELETE',
@@ -47,7 +50,7 @@ const api = (function () {
   return {
     getItems,
     createItem,
-	updateItem,
-	deleteItem
+	  updateItem,
+	  deleteItem
   };
 }());

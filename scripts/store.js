@@ -3,9 +3,11 @@
 
 // eslint-disable-next-line no-unused-vars
 const store = (function(){
-  const addItem = function(itemObj) {
-    this.items.push(itemObj);
-    // try {
+  
+  const addItem = function(item) {
+   
+    this.items.push(item);
+    // try {//Try to implement the validation (shopping-list.js)
     //   Item.validateName(name);
     //   this.items.push(Item.create(name));
     // } catch(e) {
@@ -28,10 +30,10 @@ const store = (function(){
 
 
   const findAndUpdate  = function(id, newData) {
-    console.log(this.items);
+    //console.log(this.items);
     
     const updateItem = this.findById(id);
-    console.log(updateItem);
+    //console.log(updateItem);
     
     Object.assign(updateItem, newData);
   };

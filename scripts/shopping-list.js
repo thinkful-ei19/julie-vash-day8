@@ -37,6 +37,7 @@ const shoppingList = (function(){
   
   function render() {
     // Filter item list if store prop is true by item.checked === false
+   
     let items = store.items;
     if (store.hideCheckedItems) {
       items = store.items.filter(item => !item.checked);
@@ -57,12 +58,17 @@ const shoppingList = (function(){
   
   
   function handleNewItemSubmit() {
+  
     $('#js-shopping-list-form').submit(function (event) {
       event.preventDefault();
       const newItemName = $('.js-shopping-list-entry').val();
       $('.js-shopping-list-entry').val('');
-      store.addItem(newItemName);
-      render();
+      api.createItem(newItemName, (itemFromServer) => {
+        store.addItem(itemFromServer);
+        console.log(itemFromServer);
+        render();
+      });
+      
     });
   }
   
@@ -74,6 +80,7 @@ const shoppingList = (function(){
   
   function handleItemCheckClicked() {
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
+    
       const id = getItemIdFromElement(event.currentTarget);
       // store.findAndToggleChecked(id);
       // render();
@@ -86,6 +93,7 @@ const shoppingList = (function(){
   }
   
   function handleDeleteItemClicked() {
+    
     // like in `handleItemCheckClicked`, we use event delegation
     $('.js-shopping-list').on('click', '.js-item-delete', event => {
       // get the index of the item in store.items
@@ -102,15 +110,18 @@ const shoppingList = (function(){
     });
   }
   
-  function handleEditShoppingItemSubmit(id, newName) {
+  function handleEditShoppingItemSubmit() {
+    console.log('editShoppintSubmit');
     $('.js-shopping-list').on('submit', '#js-edit-item', event => {
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
+      // console.log(id);
+      // console.log(itemName);
       //store.findAndUpdateName(id, itemName);
 
-      api.updateItem(id, { name: newName }, () => {
-        store.findAndUpdate(id, { name: newName });
+      api.updateItem(id, { name: itemName }, () => {
+        store.findAndUpdate(id, { name: itemName });
         //render();
       });
       render();
